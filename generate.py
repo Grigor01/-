@@ -4,12 +4,14 @@ import sys
 import random
 import pickle
 
+
 def SentenceGenerator(data, origin, l):
+    print(data)
     if l == 0:
         l = random.randint(1, 25)
     space = ''
     w1, w2 = '7', '7'
-    if origin != "":
+    if origin != "7":
         ComboKeys = list(data.keys())
         random.shuffle(ComboKeys)
         for key in ComboKeys:
@@ -21,7 +23,7 @@ def SentenceGenerator(data, origin, l):
             sys.exit(0)
         space += w1 + ' ' + w2
     for _ in range(l):
-        w1, w2 = w2, unirand(data[w1, w2])
+        w1, w2 = w2, RandNextWord(data[w1, w2])
         if w2 == '7': break
     return space + '\n'
 
@@ -31,7 +33,7 @@ def RandNextWord(sequence):
     for pair, freq in sequence:
         sum += freq
     rand = random.uniform(0, sum)
-    for token, freq in seq:
+    for token, freq in sequence:
         frequence += freq
         if rand < frequence:
             return token
@@ -39,7 +41,7 @@ def RandNextWord(sequence):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Генерирует текст из модели')
-    
+
     parser.add_argument(
         '--seed',
         dest='origin',
@@ -47,7 +49,7 @@ if __name__ == '__main__':
         default="7",
         help='Начальное слово. Если не указано,\
         выбираем слово случайно из всех слов.')
-    
+
     parser.add_argument(
         '--length',
         dest='l',
@@ -68,7 +70,7 @@ if __name__ == '__main__':
         type=argparse.FileType('w'),
         default=sys.stdout,
         help='output model (default: stdout)')
-   
+
     args = parser.parse_args()
-    args.output.write(generate_sentence
-                      (pickle.load(args.data), args.origin, args.l))
+    args.output.write(
+        SentenceGenerator(pickle.load(args.data), args.origin, args.l))
