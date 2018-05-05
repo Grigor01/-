@@ -27,6 +27,7 @@ def TrigramsGen(tokens):
     w1, w2 = '7', '7'
     for w3 in tokens:
         yield w1, w2, w3
+        w1, w2 = w2, w3
 
 
 def train(text, reg):

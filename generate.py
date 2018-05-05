@@ -6,7 +6,6 @@ import pickle
 
 
 def SentenceGenerator(data, origin, l):
-    print(data)
     if l == 0:
         l = random.randint(1, 25)
     space = ''
@@ -24,7 +23,9 @@ def SentenceGenerator(data, origin, l):
         space += w1 + ' ' + w2
     for _ in range(l):
         w1, w2 = w2, RandNextWord(data[w1, w2])
-        if w2 == '7': break
+        if w2 == '7':
+            break
+        space += ' ' + w2
     return space + '\n'
 
 
