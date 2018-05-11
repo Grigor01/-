@@ -5,7 +5,7 @@ import random
 import pickle
 
 
-def SentenceGenerator(data, origin, l):
+def sentence_generator(data, origin, l):
     if l == 0:
         l = random.randint(1, 25)
     space = ''
@@ -26,14 +26,14 @@ def SentenceGenerator(data, origin, l):
         space += w1 + ' ' + w2
         l -= 2
     for _ in range(l):
-        w1, w2 = w2, RandNextWord(data[w1, w2])
+        w1, w2 = w2, rand_next_word(data[w1, w2])
         if w2 == '7':
             break
         space += ' ' + w2
     return space + '\n'
 
 
-def RandNextWord(sequence):
+def rand_next_word(sequence):
     sum, frequence = 0, 0
     for pair, freq in sequence:
         sum += freq
@@ -78,4 +78,4 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     args.output.write(
-        SentenceGenerator(pickle.load(args.data), args.origin, args.l))
+        sentence_generator(pickle.load(args.data), args.origin, args.l))
