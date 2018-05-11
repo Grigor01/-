@@ -10,6 +10,9 @@ def SentenceGenerator(data, origin, l):
         l = random.randint(1, 25)
     space = ''
     w1, w2 = '7', '7'
+    if origin == '7':
+        while ((w1, w2) == ('7', '7')):
+            w1, w2 = random.choice(list(data.keys()))
     if origin != "7":
         ComboKeys = list(data.keys())
         random.shuffle(ComboKeys)
@@ -21,6 +24,7 @@ def SentenceGenerator(data, origin, l):
             print("Invalid origin.\n")
             sys.exit(0)
         space += w1 + ' ' + w2
+        l -= 2
     for _ in range(l):
         w1, w2 = w2, RandNextWord(data[w1, w2])
         if w2 == '7':
